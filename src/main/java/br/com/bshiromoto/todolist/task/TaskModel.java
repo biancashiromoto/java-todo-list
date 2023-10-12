@@ -1,6 +1,8 @@
 package br.com.bshiromoto.todolist.task;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -18,14 +20,25 @@ public class TaskModel {
   @Id
   @GeneratedValue(generator = "UUID")
   private UUID id;
+
+  @Column(unique = true, length = 255)
   private String description;
 
-  @Column(unique = true, length = 50)
+  @Column(unique = true, length = 50, nullable = false)
   private String title;
 
-  private LocalDateTime dueDate;
+  @Column(nullable = false)
+  private LocalDate dueDate;
+
+  private LocalTime dueTime;
+
+  @Column(nullable = false)
   private String priority;
+
+  @Column(nullable = false)
   private String status;
+
+  @Column(nullable = false)
   private UUID userId;
 
   @CreationTimestamp
