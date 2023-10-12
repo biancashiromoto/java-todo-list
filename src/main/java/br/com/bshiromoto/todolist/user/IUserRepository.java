@@ -1,5 +1,6 @@
 package br.com.bshiromoto.todolist.user;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +11,6 @@ public interface IUserRepository extends JpaRepository<UserModel, UUID> {
 
   // criado pelo próprio Spring
   UserModel findByUsername(String username);
+
+  List<UserModel> findAll();
 }
