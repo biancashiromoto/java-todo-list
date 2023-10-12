@@ -1,8 +1,12 @@
 package br.com.bshiromoto.todolist.task;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.micrometer.core.ipc.http.HttpSender.Response;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
@@ -32,6 +37,18 @@ public class TaskController {
     
     var userId = request.getAttribute("userId");
     taskModel.setUserId((UUID) userId);
+
+    var currDate = LocalDate.now();
+    
+    if(currDate.isAfter(taskModel.getDueDate())) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid date option");
+    }
+
+    LocalDateTime dueDateTime = LocalDateTime.of(LocalDate.now(), taskModel.getDueTime());
+
+    if(LocalDateTime.now().isAfter(dueDateTime)) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid time option");
+    }
 
     var createdTask = this.taskRepository.save(taskModel);
 
