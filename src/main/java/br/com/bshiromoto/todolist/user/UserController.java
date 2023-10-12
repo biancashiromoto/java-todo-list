@@ -2,6 +2,8 @@
 package br.com.bshiromoto.todolist.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,9 +18,19 @@ public class UserController {
 
   @PostMapping("/")
 
+  // o ResponseEntity permite que tenhamos retornos diferentes na mesma requisição
   // o @RequestBody indica que o que for recebido no corpo da requisição virá na estrutura do UserModel
-  public UserModel create(@RequestBody UserModel userModel) {
+  public ResponseEntity create(@RequestBody UserModel userModel) {
+  
+    // usa o método findByUsername definido na interface
+    var foundUser = this.userRepository.findByUsername(userModel.getUsername());
+
+    if(foundUser != null) {
+      System.out.println("User already exists");
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists");
+    }
+
     var createdUser = this.userRepository.save(userModel);
-    return createdUser;
+    return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
   }
 }
