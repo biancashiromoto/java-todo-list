@@ -29,6 +29,7 @@ public class UserModel {
   @GeneratedValue(generator = "UUID") // faz a geração dos ids de forma automática
   private UUID id;
 
+  @Column(unique = true) // define que a coluna username deve ser um valor único
   private String username;
   private String name;
   private String password;
