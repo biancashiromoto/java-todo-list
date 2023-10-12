@@ -14,6 +14,6 @@ public class UserController {
 
   // o @RequestBody indica que o que for recebido no corpo da requisição virá na estrutura do UserModel
   public void create(@RequestBody UserModel userModel) {
-    System.out.println(userModel.name);
+    System.out.println(userModel.getName());
   }
 }
