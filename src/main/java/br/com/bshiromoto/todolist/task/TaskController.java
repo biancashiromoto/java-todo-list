@@ -1,5 +1,7 @@
 package br.com.bshiromoto.todolist.task;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/tasks")
@@ -18,12 +22,16 @@ public class TaskController {
   private ITaskRepository taskRepository;
 
   @PostMapping("/")
-  public ResponseEntity create(@RequestBody TaskModel taskModel) {
+  public ResponseEntity create(@RequestBody TaskModel taskModel, HttpServletRequest request) {
+    
     var foundTask = this.taskRepository.findByTitle(taskModel.getTitle());
-
+    
     if(foundTask != null) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("there is already a task with this title");
     }
+    
+    var userId = request.getAttribute("userId");
+    taskModel.setUserId((UUID) userId);
 
     var createdTask = this.taskRepository.save(taskModel);
 
