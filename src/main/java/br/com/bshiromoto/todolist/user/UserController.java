@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import io.micrometer.core.ipc.http.HttpSender.Response;
 
 @RestController // usado para construir APIs - o Spring tem vários outros tipos de controller
 @RequestMapping("/users") // especifica que todas as requisições que começam com /home serão manipuladas por métodos dentro desta classe
