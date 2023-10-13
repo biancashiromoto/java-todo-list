@@ -63,19 +63,18 @@ public class TaskController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity update(@RequestBody TaskModel taskModel, @PathVariable UUID id) {
-    Optional<TaskModel> task = this.taskRepository.findById(id);
+  public ResponseEntity update(@RequestBody TaskModel taskModel, @PathVariable UUID id, HttpServletRequest request) {
+    var foundTask = this.taskRepository.findById(id).orElse(null);
 
-    if(task.isPresent()) {
-      TaskModel foundTask = task.get();
+    var userId = request.getAttribute("userId");
 
-      Utils.copyNonNullProperties(taskModel, foundTask);
-
-      this.taskRepository.save(foundTask);
-
-      return ResponseEntity.status(HttpStatus.OK).body(foundTask);
-    } else {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Task not found");
+    if(!foundTask.getUserId().equals(userId)) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You are not allowed to update this task");
     }
+    // aqui, usamos a copyNonNullProperties para copiar os valores que não vieram no body
+    Utils.copyNonNullProperties(taskModel, foundTask);
+
+    this.taskRepository.save(foundTask);
+    return ResponseEntity.status(HttpStatus.OK).body(foundTask);
   }
 }
