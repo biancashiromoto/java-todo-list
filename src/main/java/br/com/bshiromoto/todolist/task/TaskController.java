@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.bshiromoto.todolist.Utils;
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
@@ -68,16 +69,11 @@ public class TaskController {
     if(task.isPresent()) {
       TaskModel foundTask = task.get();
 
-      foundTask.setTitle(taskModel.getTitle());
-      foundTask.setDescription(taskModel.getDescription());
-      foundTask.setDueDate(taskModel.getDueDate());
-      foundTask.setDueTime(taskModel.getDueTime());
-      foundTask.setPriority(taskModel.getPriority());
-      foundTask.setStatus(taskModel.getStatus());
+      Utils.copyNonNullProperties(taskModel, foundTask);
 
-      TaskModel updatedTask = this.taskRepository.save(foundTask);
+      this.taskRepository.save(foundTask);
 
-      return ResponseEntity.status(HttpStatus.OK).body(updatedTask);
+      return ResponseEntity.status(HttpStatus.OK).body(foundTask);
     } else {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Task not found");
     }
