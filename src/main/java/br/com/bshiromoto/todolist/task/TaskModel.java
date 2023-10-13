@@ -7,9 +7,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
+import br.com.bshiromoto.todolist.task.types.Priority;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,7 +35,7 @@ public class TaskModel {
   private LocalTime dueTime;
 
   @Column(nullable = false)
-  private String priority;
+  private Priority priority;
 
   @Column(nullable = false)
   private String status;
@@ -62,20 +61,32 @@ public class TaskModel {
     }
   }
 
-  public void setDueTime(String time) throws Exception {
-    // objeto que será usado para fazer a conversão de uma string em um LocalTime no formato de 24 horas
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-    // converte o time em um objeto LocalTime
-    LocalTime parsedDueTime = LocalTime.parse(time, formatter);
+  // public void setDueTime(String time) throws Exception {
+  //   // objeto que será usado para fazer a conversão de uma string em um LocalTime no formato de 24 horas
+  //   DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+  //   // converte o time em um objeto LocalTime
+  //   LocalTime parsedDueTime = LocalTime.parse(time, formatter);
 
-    LocalDateTime currDateTime = LocalDateTime.now();
-    // cria um novo objeto que usa a data atual e o parsedDueTime para combinar a data e o tempo
-    LocalDateTime dueDateTime = LocalDateTime.of(currDateTime.toLocalDate(), parsedDueTime);
+  //   var currDateTime = LocalDateTime.now();
+  //   var currTime = LocalTime.now();
+  //   LocalTime dTime = LocalTime.parse(time, formatter);
+    
+  //   // cria um novo objeto que usa a data atual e o parsedDueTime para combinar a data e o tempo
+  //   LocalDateTime dueDateTime = LocalDateTime.of(currDateTime.toLocalDate(), parsedDueTime);
 
-    if (LocalDateTime.now().isAfter(dueDateTime)) {
-        throw new Exception("Invalid time option");
-    }
+  //   System.out.println("dTime " + dTime);
+  //   System.out.println("PARSEDDUETIME " + parsedDueTime);
+  //   System.out.println("dueDateTime " + dueDateTime);
+  //   System.out.println("currTime " + currTime);
 
-    this.dueTime = parsedDueTime;
+  //   if (LocalDateTime.now().isAfter(dueDateTime)) {
+  //       throw new Exception("Invalid time option");
+  //   }
+
+  //   this.dueTime = parsedDueTime;
+  // }
+
+  public void setPriority(Priority priority) {
+    this.priority = priority;
   }
 }
