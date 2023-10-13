@@ -19,7 +19,7 @@ public class UserController {
   @Autowired // gerencia o ciclo de vida do método IUserRepository
   private IUserRepository userRepository;
 
-  @PostMapping("/")
+  @PostMapping("")
 
   // o ResponseEntity permite que tenhamos retornos diferentes na mesma requisição
   // o @RequestBody indica que o que for recebido no corpo da requisição virá na estrutura do UserModel
@@ -47,7 +47,7 @@ public class UserController {
     return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
   }
 
-  @GetMapping("/")
+  @GetMapping("")
   public ResponseEntity findAll() {
     var users = this.userRepository.findAll();
 
