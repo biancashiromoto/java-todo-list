@@ -6,6 +6,8 @@ import java.time.LocalTime;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -50,4 +52,14 @@ public class TaskModel {
     }
     this.title = title;
   }
+
+  public void setDueDate(LocalDate dueDate) throws Exception {
+    var currDate = LocalDate.now();
+
+    if(currDate.isAfter(dueDate)) {
+      throw new Exception("Invalid date option");
+    }
+  }
+
+  
 }

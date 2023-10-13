@@ -39,12 +39,6 @@ public class TaskController {
     System.out.println(userId);
     taskModel.setUserId((UUID) userId);
 
-    var currDate = LocalDate.now();
-    
-    if(currDate.isAfter(taskModel.getDueDate())) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid date option");
-    }
-
     LocalDateTime dueDateTime = LocalDateTime.of(LocalDate.now(), taskModel.getDueTime());
 
     if(LocalDateTime.now().isAfter(dueDateTime)) {
