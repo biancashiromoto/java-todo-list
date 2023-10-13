@@ -39,12 +39,6 @@ public class TaskController {
     System.out.println(userId);
     taskModel.setUserId((UUID) userId);
 
-    LocalDateTime dueDateTime = LocalDateTime.of(LocalDate.now(), taskModel.getDueTime());
-
-    if(LocalDateTime.now().isAfter(dueDateTime)) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid time option");
-    }
-
     var createdTask = this.taskRepository.save(taskModel);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);

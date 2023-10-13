@@ -3,6 +3,7 @@ package br.com.bshiromoto.todolist.task;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -61,5 +62,19 @@ public class TaskModel {
     }
   }
 
-  
+  public void setDueTime(String time) throws Exception {
+    // objeto que será usado para fazer a conversão de uma string em um LocalTime no formato de 24 horas
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+    // converte o 
+    LocalTime parsedDueTime = LocalTime.parse(time, formatter);
+
+    LocalDateTime currDateTime = LocalDateTime.now();
+    LocalDateTime dueDateTime = LocalDateTime.of(currDateTime.toLocalDate(), parsedDueTime);
+
+    if (LocalDateTime.now().isAfter(dueDateTime)) {
+        throw new Exception("Invalid time option");
+    }
+
+    this.dueTime = parsedDueTime;
+  }
 }
