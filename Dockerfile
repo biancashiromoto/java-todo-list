@@ -14,6 +14,9 @@ RUN apt-get install maven -y
 # constrói e empacota o projeto java 
 RUN mvn clean install
 
+# imagem base para rodar a aplicação
+FROM openjdk:17-jdk-slim
+
 # expõe a porta 8080
 EXPOSE 8080
 
