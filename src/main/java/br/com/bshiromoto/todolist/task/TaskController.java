@@ -26,16 +26,17 @@ public class TaskController {
   
   private ITaskRepository taskRepository;
 
-  @PostMapping("/")
+  @PostMapping("")
   public ResponseEntity create(@RequestBody TaskModel taskModel, HttpServletRequest request) {
     
     var foundTask = this.taskRepository.findByTitle(taskModel.getTitle());
     
     if(foundTask != null) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("there is already a task with this title");
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is already a task with this title");
     }
     
     var userId = request.getAttribute("userId");
+    System.out.println(userId);
     taskModel.setUserId((UUID) userId);
 
     var currDate = LocalDate.now();
@@ -55,7 +56,7 @@ public class TaskController {
     return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
   }
 
-  @GetMapping("/")
+  @GetMapping("")
   public ResponseEntity findAll() {
     var tasks = this.taskRepository.findAll();
     return ResponseEntity.status(HttpStatus.OK).body(tasks);
