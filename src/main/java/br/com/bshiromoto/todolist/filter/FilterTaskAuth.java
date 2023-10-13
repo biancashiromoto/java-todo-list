@@ -28,7 +28,7 @@ public class FilterTaskAuth extends OncePerRequestFilter {
 
       var servletPath = request.getServletPath();
 
-      if(servletPath.equals("/tasks/")) {
+      if(servletPath.startsWith("/tasks/")) {
         var authorization = request.getHeader("Authorization");
   
         // substring - método que recebe como parâmetro um ou dois ints - primeiro é o index de início e o segundo é o final. Pode-se usar string também
