@@ -65,10 +65,11 @@ public class TaskModel {
   public void setDueTime(String time) throws Exception {
     // objeto que será usado para fazer a conversão de uma string em um LocalTime no formato de 24 horas
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
-    // converte o 
+    // converte o time em um objeto LocalTime
     LocalTime parsedDueTime = LocalTime.parse(time, formatter);
 
     LocalDateTime currDateTime = LocalDateTime.now();
+    // cria um novo objeto que usa a data atual e o parsedDueTime para combinar a data e o tempo
     LocalDateTime dueDateTime = LocalDateTime.of(currDateTime.toLocalDate(), parsedDueTime);
 
     if (LocalDateTime.now().isAfter(dueDateTime)) {
