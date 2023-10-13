@@ -21,7 +21,7 @@ public class TaskModel {
   @GeneratedValue(generator = "UUID")
   private UUID id;
 
-  @Column(unique = true, length = 255)
+  @Column(length = 255)
   private String description;
 
   @Column(unique = true, length = 50, nullable = false)
