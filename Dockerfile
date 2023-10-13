@@ -21,7 +21,7 @@ FROM openjdk:17-jdk-slim
 EXPOSE 8080
 
 # pega o arquivo criado pelo mvn clean install
-COPY --from=build /target/todolist-0.0.1.jar app.jar
+COPY --from=build target/todolist-0.0.1-SNAPSHOT.jar app.jar
 
 # roda o projeto java 
 ENTRYPOINT [ "java", "-jar", "app.jar" ]
