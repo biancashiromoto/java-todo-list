@@ -20,7 +20,7 @@ FROM openjdk:17-jdk-slim
 # expõe a porta 8080
 EXPOSE 8080
 
-# pega o arquivo criado pelo mvn clean install
+# copia o arquivo JAR do ambiente de construção para o diretório atual
 COPY --from=build target/todolist-0.0.1-SNAPSHOT.jar app.jar
 
 # roda o projeto java 
