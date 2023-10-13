@@ -36,4 +36,22 @@ public class UserModel {
 
   @CreationTimestamp // quando o dado for gerado, o db salva automaticamente o timestamp
   private LocalDateTime createdAt;
+
+  public void setUsername(String username) throws Exception {
+    if (username.length() < 3) {
+      throw new Exception("Username length must be at least 3 characters long");
+    }
+  }
+
+  public void setName(String name) throws Exception {
+    if (name.length() < 3) {
+      throw new Exception("Name length must be at least 3 characters long");
+    }
+  }
+
+  public void setPassword(String password) throws Exception {
+    if (password.length() < 6) {
+      throw new Exception("Password length must be at least 6 characters long");
+    }
+  }
 }
