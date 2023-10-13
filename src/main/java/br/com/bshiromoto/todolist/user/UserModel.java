@@ -41,17 +41,20 @@ public class UserModel {
     if (username.length() < 3) {
       throw new Exception("Username length must be at least 3 characters long");
     }
+    this.username = username;
   }
 
   public void setName(String name) throws Exception {
     if (name.length() < 3) {
       throw new Exception("Name length must be at least 3 characters long");
     }
+    this.name = name;
   }
 
   public void setPassword(String password) throws Exception {
     if (password.length() < 6) {
       throw new Exception("Password length must be at least 6 characters long");
     }
+    this.password = password;
   }
 }
