@@ -1,6 +1,8 @@
 // Componente designado para ser a primeira camada de acesso entre a requisição (usuário) e as demais camadas
 package br.com.bshiromoto.todolist.user;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
