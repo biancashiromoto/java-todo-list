@@ -55,7 +55,7 @@ public class TaskModel {
   }
 
   public void setDueDate(LocalDate dueDate) throws Exception {
-    var currDate = LocalDate.now();
+    LocalDate currDate = LocalDate.now();
 
     if(currDate.isAfter(dueDate)) {
       throw new Exception("Invalid date option");
