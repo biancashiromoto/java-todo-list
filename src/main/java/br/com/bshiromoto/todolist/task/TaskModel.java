@@ -3,7 +3,7 @@ package br.com.bshiromoto.todolist.task;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
+// import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -32,7 +32,7 @@ public class TaskModel {
   @Column(nullable = false)
   private LocalDate dueDate;
 
-  private LocalTime dueTime;
+  // private LocalTime dueTime;
 
   @Column(nullable = false)
   private Priority priority;
@@ -59,6 +59,7 @@ public class TaskModel {
     if(currDate.isAfter(dueDate)) {
       throw new Exception("Invalid date option");
     }
+    this.dueDate = dueDate;
   }
 
   // public void setDueTime(String time) throws Exception {
