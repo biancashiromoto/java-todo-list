@@ -28,7 +28,7 @@ public class UserController {
     try {
       
       // usa o método findByUsername definido na interface
-      var foundUser = this.userRepository.findByUsername(userModel.getUsername());
+      UserModel foundUser = this.userRepository.findByUsername(userModel.getUsername());
 
       if(foundUser != null) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists");
@@ -39,7 +39,7 @@ public class UserController {
       userModel.setPassword(hashedPassword);
 
       // salva os dados do usuário no db
-      var createdUser = this.userRepository.save(userModel);
+      UserModel createdUser = this.userRepository.save(userModel);
 
       // retorna o status 201 e o novo usuário
       return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
@@ -50,7 +50,7 @@ public class UserController {
 
   @GetMapping("")
   public ResponseEntity findAll() {
-    var users = this.userRepository.findAll();
+    List<UserModel> users = this.userRepository.findAll();
 
     return ResponseEntity.status(HttpStatus.OK).body(users);
   }
