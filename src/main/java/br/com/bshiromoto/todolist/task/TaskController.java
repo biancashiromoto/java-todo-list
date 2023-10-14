@@ -1,7 +1,6 @@
 package br.com.bshiromoto.todolist.task;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,35 +28,34 @@ public class TaskController {
   @PostMapping("")
   public ResponseEntity create(@RequestBody TaskModel taskModel, HttpServletRequest request) {
     
-    var foundTask = this.taskRepository.findByTitle(taskModel.getTitle());
+    TaskModel foundTask = this.taskRepository.findByTitle(taskModel.getTitle());
     
     if(foundTask != null) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("There is already a task with this title");
     }
     
-    var userId = request.getAttribute("userId");
-    System.out.println(userId);
+    Object userId = request.getAttribute("userId");
     taskModel.setUserId((UUID) userId);
 
-    var createdTask = this.taskRepository.save(taskModel);
+    TaskModel createdTask = this.taskRepository.save(taskModel);
 
     return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
   }
 
   @GetMapping("")
   public ResponseEntity findAll() {
-    var tasks = this.taskRepository.findAll();
+    List<TaskModel> tasks = this.taskRepository.findAll();
     return ResponseEntity.status(HttpStatus.OK).body(tasks);
   }
 
   @PutMapping("/{id}")
   public ResponseEntity update(@RequestBody TaskModel taskModel, @PathVariable UUID id, HttpServletRequest request) {
-    var foundTask = this.taskRepository.findById(id).orElse(null);
+    TaskModel foundTask = this.taskRepository.findById(id).orElse(null);
 
     if (foundTask == null) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Task not found");
     }
-    var userId = request.getAttribute("userId");
+    Object userId = request.getAttribute("userId");
 
     if(!foundTask.getUserId().equals(userId)) {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You are not allowed to update this task");
